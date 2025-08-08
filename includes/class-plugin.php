@@ -6,6 +6,8 @@ use function SimplePortfolio\Taxonomy\register as register_taxonomy;
 use function SimplePortfolio\Metabox\add as add_meta_boxes;
 use function SimplePortfolio\Metabox\save as save_meta_boxes;
 use function SimplePortfolio\Shortcode\init as shortcode_init; 
+use SimplePortfolio\Settings\Settings;
+use SimplePortfolio\API\API;
 
 defined('ABSPATH') || exit;
 
@@ -18,6 +20,12 @@ class Plugin {
         add_action('add_meta_boxes', [ $this, 'add_meta_boxes' ]);
         add_action('save_post', [ $this, 'save_meta_boxes' ]);
         add_action('init', [$this, 'register_shortcode']);
+
+        $settings = new Settings();
+        $settings->init();
+
+        $api = new API();
+        $api->init();
     }
 
     // Register the Portfolio post type

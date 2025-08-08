@@ -29,6 +29,9 @@ require_once SIMPLE_PORTFOLIO_PATH . 'includes/cpt.php';
 require_once SIMPLE_PORTFOLIO_PATH . 'includes/taxonomy.php';
 require_once SIMPLE_PORTFOLIO_PATH . 'includes/metabox.php';
 require_once SIMPLE_PORTFOLIO_PATH . 'includes/shortcode.php';
+require_once SIMPLE_PORTFOLIO_PATH . 'includes/settings/class-settings.php';
+require_once SIMPLE_PORTFOLIO_PATH . 'includes/api/class-api.php';
+require_once SIMPLE_PORTFOLIO_PATH . 'includes/api/class-auth.php';
 
 function simple_portfolio_run_plugin() {
     $plugin = new Plugin();
