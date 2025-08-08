@@ -16,15 +16,19 @@
 
 defined('ABSPATH') || exit;
 
+if (!defined('SIMPLE_PORTFOLIO_PATH')) {
+    define('SIMPLE_PORTFOLIO_PATH', plugin_dir_path(__FILE__));
+}
+
 // Namespace
 use SimplePortfolio\Plugin;
 
 // Plugin Files
-require_once plugin_dir_path(__FILE__) . 'includes/class-plugin.php';
-require_once plugin_dir_path(__FILE__) . 'includes/cpt.php';
-require_once plugin_dir_path(__FILE__) . 'includes/taxonomy.php';
-require_once plugin_dir_path(__FILE__) . 'includes/metabox.php';
-
+require_once SIMPLE_PORTFOLIO_PATH . 'includes/class-plugin.php';
+require_once SIMPLE_PORTFOLIO_PATH . 'includes/cpt.php';
+require_once SIMPLE_PORTFOLIO_PATH . 'includes/taxonomy.php';
+require_once SIMPLE_PORTFOLIO_PATH . 'includes/metabox.php';
+require_once SIMPLE_PORTFOLIO_PATH . 'includes/shortcode.php';
 
 function simple_portfolio_run_plugin() {
     $plugin = new Plugin();
