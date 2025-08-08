@@ -26,6 +26,8 @@ class Plugin {
 
         $api = new API();
         $api->init();
+		
+		add_action('rest_api_init', [$this, 'add_cors_headers'], 15);
     }
 
     // Register the Portfolio post type
@@ -52,6 +54,21 @@ class Plugin {
     public function register_shortcode() {
         shortcode_init();
     }
+	
+	// Remove WP default CORS headers
+	public function add_cors_headers() {
+    remove_filter('rest_pre_serve_request', 'rest_send_cors_headers');
+		add_filter('rest_pre_serve_request', function ($value) {
+			$current_url = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
+
+			if (strpos($current_url, '/simple-portfolio/v1/portfolio-list') !== false || strpos($current_url, '/simple-portfolio/v1/portfolio') !== false) {
+				header('Access-Control-Allow-Origin: *');
+				header('Access-Control-Allow-Methods: GET');
+				header('Access-Control-Allow-Headers: X-API-Key, Content-Type');
+			}
+			return $value;
+		});
+	}
 
     // Actions to perform on plugin activation
     public static function activate() {
