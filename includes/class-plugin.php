@@ -1,70 +1,56 @@
 <?php
 namespace SimplePortfolio;
 
+use function SimplePortfolio\CPT\register as register_cpt;
+use function SimplePortfolio\Taxonomy\register as register_taxonomy;
+use function SimplePortfolio\Metabox\add as add_meta_boxes;
+use function SimplePortfolio\Metabox\save as save_meta_boxes;
+
 defined('ABSPATH') || exit;
 
-//Plugin Class
+
 class Plugin {
 
-    // Run all plugin hooks
     public function run() {
         add_action('init', [$this, 'register_post_type']);
         add_action('init', [$this, 'register_taxonomy']);
-        // add_action('add_meta_boxes', [$this, 'add_meta_boxes']);
-        // add_action('save_post', [$this, 'save_meta_boxes']);
-        // add_shortcode('portfolio_list', [$this, 'render_shortcode']);
-        // add_action('wp_enqueue_scripts', [$this, 'enqueue_assets']);
+        add_action('add_meta_boxes', [ $this, 'add_meta_boxes' ]);
+        add_action('save_post', [ $this, 'save_meta_boxes' ]);
     }
 
-    // Portfolio Post Type
+    // Register the Portfolio post type
     public function register_post_type() {
-        $labels = [
-            'name'               => __('Portfolios', 'simple-portfolio'),
-            'singular_name'      => __('Portfolio', 'simple-portfolio'),
-            'add_new'            => __('Add New', 'simple-portfolio'),
-            'add_new_item'       => __('Add New Portfolio', 'simple-portfolio'),
-            'edit_item'          => __('Edit Portfolio', 'simple-portfolio'),
-            'new_item'           => __('New Portfolio', 'simple-portfolio'),
-            'view_item'          => __('View Portfolio', 'simple-portfolio'),
-            'search_items'       => __('Search Portfolios', 'simple-portfolio'),
-            'not_found'          => __('No portfolios found', 'simple-portfolio'),
-            'not_found_in_trash' => __('No portfolios found in Trash', 'simple-portfolio'),
-            'menu_name'          => __('Portfolios', 'simple-portfolio'),
-        ];
-
-        register_post_type('portfolio', [
-            'labels'        => $labels,
-            'public'        => true,
-            'show_in_rest'  => true,
-            'has_archive'   => true,
-            'menu_position' => 5,
-            'menu_icon'     => 'dashicons-portfolio',
-            'supports'      => ['title', 'editor', 'thumbnail', 'category'],
-            'rewrite'       => ['slug' => 'portfolio'],
-        ]);
+        register_cpt();
     }
 
-    // Poject Types Taxonomy
+    // Register the Project Type taxonomy
     public function register_taxonomy() {
-        $labels = [
-            'name'              => __('Project Types', 'simple-portfolio'),
-            'singular_name'     => __('Project Type', 'simple-portfolio'),
-            'search_items'      => __('Search Project Types', 'simple-portfolio'),
-            'all_items'         => __('All Project Types', 'simple-portfolio'),
-            'edit_item'         => __('Edit Project Type', 'simple-portfolio'),
-            'update_item'       => __('Update Project Type', 'simple-portfolio'),
-            'add_new_item'      => __('Add New Project Type', 'simple-portfolio'),
-            'new_item_name'     => __('New Project Type Name', 'simple-portfolio'),
-            'menu_name'         => __('Project Types', 'simple-portfolio'),
-        ];
-
-        register_taxonomy('project_type', 'portfolio', [
-            'labels'       => $labels,
-            'hierarchical' => true,
-            'public'       => true,
-            'show_in_rest' => true,
-            'rewrite'      => ['slug' => 'project-type'],
-        ]);
+        register_taxonomy();
     }
 
+    // Register Metabox
+    public function add_meta_boxes() {
+        add_meta_boxes();
+    }
+
+    // Save Metabox
+    public function save_meta_boxes($post_id) {
+        save_meta_boxes($post_id);
+    }
+
+
+
+
+
+    // Actions to perform on plugin activation
+    public static function activate() {
+        register_cpt();
+        register_taxonomy();
+        flush_rewrite_rules();
+    }
+
+    // Actions to perform on plugin deactivation
+    public static function deactivate() {
+        flush_rewrite_rules();
+    }
 }

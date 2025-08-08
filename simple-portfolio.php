@@ -19,8 +19,12 @@ defined('ABSPATH') || exit;
 // Namespace
 use SimplePortfolio\Plugin;
 
-// Plugin Class
+// Plugin Files
 require_once plugin_dir_path(__FILE__) . 'includes/class-plugin.php';
+require_once plugin_dir_path(__FILE__) . 'includes/cpt.php';
+require_once plugin_dir_path(__FILE__) . 'includes/taxonomy.php';
+require_once plugin_dir_path(__FILE__) . 'includes/metabox.php';
+
 
 function simple_portfolio_run_plugin() {
     $plugin = new Plugin();
