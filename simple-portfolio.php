@@ -35,3 +35,19 @@ function simple_portfolio_run_plugin() {
     $plugin->run();
 }
 simple_portfolio_run_plugin();
+
+
+// Single Portfolio Fallback Template
+add_filter('template_include', function($template) {
+    if ( is_singular('portfolio') ) {  
+        $theme_template = locate_template('single-portfolio.php');
+        
+        if ( $theme_template ) {
+            return $theme_template;
+        } else {
+            return SIMPLE_PORTFOLIO_PATH . 'templates/single-portfolio.php';
+        }
+    }
+
+    return $template;
+});

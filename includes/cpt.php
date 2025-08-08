@@ -26,7 +26,7 @@ function register() {
         'has_archive'   => true,
         'menu_position' => 5,
         'menu_icon'     => 'dashicons-portfolio',
-        'supports'      => ['title', 'editor', 'thumbnail'],
+        'supports'      => ['title', 'editor', 'thumbnail', "excerpt"],
         'rewrite'       => ['slug' => 'portfolio'],
     ]);
 }
