@@ -11,8 +11,10 @@ function render($atts) {
     
     $atts = shortcode_atts([
         'type'           => '', 
-        'posts_per_page' => 6,
+        'posts_per_page' => 9,
     ], $atts, 'portfolio_list');
+
+    $posts_per_page = max(1, intval($atts['posts_per_page']));
 
     $tax_query = [];
 
@@ -28,7 +30,7 @@ function render($atts) {
 
     $args = [
         'post_type'      => 'portfolio',
-        'posts_per_page' => intval($atts['posts_per_page']),
+        'posts_per_page' => $posts_per_page,
     ];
 
     if ($tax_query) {

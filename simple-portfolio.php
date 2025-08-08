@@ -23,6 +23,9 @@ if (!defined('SIMPLE_PORTFOLIO_PATH')) {
 // Namespace
 use SimplePortfolio\Plugin;
 
+//CSS Files
+wp_enqueue_style('simple-portfolio-list-style', plugins_url( 'assets/css/portfolio.css', __FILE__ ) , array(), '1.0');
+
 // Plugin Files
 require_once SIMPLE_PORTFOLIO_PATH . 'includes/class-plugin.php';
 require_once SIMPLE_PORTFOLIO_PATH . 'includes/cpt.php';
