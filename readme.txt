@@ -83,7 +83,7 @@ API Documentation
 
 Authentication
 ------------------
-Requires x_api_key header with valid API key
+Requires x-api-key header with valid API key
 Content-Type must be application/json
 
 
@@ -111,7 +111,7 @@ fetch('https://yoursite.com/wp-json/simple-portfolio/v1/portfolio-list?page=1&pe
   method: 'GET',
   headers: {
     'Content-Type': 'application/json',
-    'x_api_key': 'your-api-key-here'
+    'x-api-key': 'your-api-key-here'
   }
 })
 .then(response => response.json())
@@ -123,7 +123,7 @@ curl Example
 curl -X GET \
   "http://yoursite.com/wp-json/simple-portfolio/v1/portfolio-list?page=1&per_page=5&type=web-design" \
   -H "Content-Type: application/json" \
-  -H "x_api_key: your-api-key-here"
+  -H "x-api-key: your-api-key-here"
 
 Example Response:
 --------------------
@@ -168,7 +168,7 @@ fetch('https://yoursite.com/wp-json/simple-portfolio/v1/portfolio?id=42', {
   method: 'GET',
   headers: {
     'Content-Type': 'application/json',
-    'x_api_key': 'your-api-key-here'
+    'x-api-key': 'your-api-key-here'
   }
 })
 .then(response => response.json())
@@ -180,7 +180,7 @@ curl Example
 curl -X GET \
   "http://yoursite.com/wp-json/simple-portfolio/v1/portfolio?id=42" \
   -H "Content-Type: application/json" \
-  -H "x_api_key: your-api-key-here"
+  -H "x-api-key: your-api-key-here"
 
 Example Response:
 --------------------
@@ -199,7 +199,7 @@ Error Handling
 ================================
 Status Code       Error                      Solution
 -----------------------------------------------------------------------------
-400	              Missing API key	           Include x_api_key header
+400	              Missing API key	           Include x-api-key header
 401	              Invalid API key	           Generate a new key or use correct one
 404	              Portfolio not found	       Check the portfolio ID exists
 415	              Invalid Content-Type	     Set Content-Type to application/json
@@ -216,7 +216,7 @@ document.addEventListener('DOMContentLoaded', function() {
   fetch(`https://yoursite.com/wp-json/simple-portfolio/v1/portfolio-list?per_page=6`, {
     headers: {
       'Content-Type': 'application/json',
-      'x_api_key': apiKey
+      'x-api-key': apiKey
     }
   })
   .then(response => response.json())
