@@ -1,83 +1,241 @@
-=== Simple Portfolio ===
-Contributors: your-name
-Tags: portfolio, custom post type, shortcode, api, taxonomy, pagination
-Requires at least: 5.0
-Tested up to: 6.8
-Stable tag: 1.0
-License: GPLv2 or later
-License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Features
 
-Simple Portfolio allows you to create and manage a portfolio section on your WordPress site with a custom post type, taxonomy, metaboxes, shortcode, and REST API.
+Portfolio Custom Post Type – Manage portfolio items separately from regular posts.
+Custom Meta Fields – Add Project Type and Project URL to each item.
+Portfolio Categories – Organize projects with a custom taxonomy.
+Shortcode with Options – Display portfolios anywhere using [simple_portfolio]:
+posts_per_page – Number of items per page.
+type – Filter by Project Type.
+Pagination included.
+Single Portfolio Template – Custom single page view for portfolio items.
+Public API Access – Securely retrieve portfolio data using a generated Secret Key:
+List API – Fetch portfolio items with optional:
+Filter by type (Project Type).
+Pagination control with page parameter.
+Limit results using posts_per_page.
+Single API – Fetch details of a specific portfolio item by its ID.
 
-== Description ==
+📥 Installation
+Download & Upload
 
-Simple Portfolio plugin adds a fully functional Portfolio system with these features:
+1.Download the simple-portfolio.zip file.
+In WordPress Dashboard, go to Plugins → Add New → Upload Plugin.
+Choose the ZIP file and click Install Now.
 
-* Custom Post Type "Portfolio" — to add and manage portfolio projects.
-* Custom Meta Boxes — add client name and project URL for each portfolio item.
-* Custom Taxonomy "Project Type" — categorize your portfolio projects.
-* Shortcode [portfolio_list] — display portfolio items anywhere with filtering and pagination.
-* Single Portfolio Page — shows detailed info with featured image, meta, taxonomy, and content.
-* REST API Endpoints — access portfolio data securely with secret API keys.
+2.Activate the Plugin
+After installation, click Activate.
+You’ll now see a new Portfolio menu in your dashboard.
 
-== Features ==
+📌 Creating a Portfolio Item
+Go to Portfolio → Add New.
+Enter a Title (e.g., Website Redesign Project).
+Add your Description in the editor.
+Featured Image – Upload a main project image (this will be the portfolio thumbnail).
+Project Type – Choose an existing type or create a new one.
+Custom Fields (in meta box):
+Client name (text field for extra info)
+Project URL (text field for extra info)
+Click Publish.
 
-1. Portfolio Custom Post Type
-- Manage portfolio projects with title, content, and featured image.
-- Meta fields for Client Name and Project URL.
-- Custom taxonomy "Project Type" to categorize projects.
+🏷 Adding Project Type (Taxonomy)
+Go to Portfolio → Project Types.
+Enter the Name (e.g., Web Design, Photography, Branding).
+Click Add New Project Type.
+When creating or editing a portfolio item, select the appropriate Project Type from the right-hand sidebar.
 
-2. Shortcode: [portfolio_list]
-- Attributes:
-    - type: filter by project type slug (e.g. type="web")
-    - posts_per_page: number of items to display (default 9)
-- Supports pagination automatically when more than one page of items exists.
-- Enqueues styles only when shortcode is used.
-- Example usage:
-    [portfolio_list type="design" posts_per_page="6"]
+✅ Quick Example
+Project Title: E-commerce Store
+Description: “Full online store with WooCommerce.”
+Featured Image: Screenshot of the store.
+Client Name: Rashedul Islam
+Project Type: Web Development
+Project URL: https://example.com
 
-3. Single Portfolio Page
-- Displays featured image, project title, client name, project URL, project types, and full content.
 
-4. REST API Endpoints
-- `/wp-json/simple-portfolio/v1/portfolio-list`
-  - Returns a paginated list of portfolio items.
-  - Supports filtering by taxonomy with the `tag` query param.
-  - Supports pagination with `page` and `per_page` params.
-- `/wp-json/simple-portfolio/v1/portfolio`
-  - Returns single portfolio post by `id`.
+Shortcode name:
+================================
+[portfolio_list]
 
-5. API Authentication & Usage
-- API access requires a secret API key passed in the request header `X-API-Key`.
-- Generate and manage API keys from the admin under Settings > Portfolio API.
-- The plugin tracks usage count of each API key.
-- Invalid or missing keys return proper HTTP errors.
+Attributes:
+type (optional): Filter portfolio items by a specific portfolio type (taxonomy term slug).
 
-== Installation ==
+post_per_page (optional): Number of portfolio items to show per page (default 6).
 
-1. Upload the `simple-portfolio` folder to the `/wp-content/plugins/` directory.
-2. Activate the plugin through the 'Plugins' menu in WordPress.
-3. Add portfolio items via the "Portfolio" menu.
-4. Add project types in the "Project Types" taxonomy.
-5. Use the shortcode `[portfolio_list]` in pages/posts to display portfolios.
-6. Visit single portfolio pages by clicking portfolio items.
-7. Manage API keys in WordPress admin under Settings > Portfolio API.
+Description:
+Displays a paginated list of Portfolio posts, optionally filtered by portfolio type.
 
-== Frequently Asked Questions ==
+Example usage:
+[portfolio_list]
 
-= How do I filter portfolio items by type? =
+// Show 10 portfolio items per page:
+[portfolio_list post_per_page="10"]
 
-Use the shortcode attribute `type` with the slug of the project type:
+// Show portfolio items only of type "web-design", 5 items per page:
+[portfolio_list type="web-design" post_per_page="5"]
 
-`[portfolio_list type="web-design"]`
+Pagination:
+The shortcode automatically adds pagination links below the portfolio list to navigate between pages.
 
-= How do I paginate the portfolio list? =
 
-Pagination is handled automatically if the total portfolio items exceed the `posts_per_page` value in shortcode.
 
-= How do I get portfolio data via API? =
+API Documentation
+===============================
 
-Generate an API key in Settings > Portfolio API, then call the endpoints with the key in the header `X-API-Key`.
+Authentication
+------------------
+Requires x_api_key header with valid API key
+Content-Type must be application/json
 
-Example GET request with curl:
 
+Generating API Keys
+-------------------
+Go to WordPress admin dashboard
+Navigate to Settings → Portfolio API
+Click "Generate New API Key" button
+Copy the generated key (displayed in the table)
+
+Endpoints
+---------------------
+1. Get Portfolio List
+GET /wp-json/simple-portfolio/v1/portfolio-list
+
+Parameters:
+---------------
+page (optional) - Page number (default: 1)
+per_page (optional) - Items per page (default: 12)
+type (optional) - Filter by project type slug
+
+JavaScript Fetch Example
+---------------------------
+fetch('https://yoursite.com/wp-json/simple-portfolio/v1/portfolio-list?page=1&per_page=5', {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+    'x_api_key': 'your-api-key-here'
+  }
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));
+
+curl Example
+---------------------------
+curl -X GET \
+  "http://yoursite.com/wp-json/simple-portfolio/v1/portfolio-list?page=1&per_page=5&type=web-design" \
+  -H "Content-Type: application/json" \
+  -H "x_api_key: your-api-key-here"
+
+Example Response:
+--------------------
+{
+  "total_posts": 15,
+  "total_pages": 3,
+  "current_page": 1,
+  "posts_per_page": 5,
+  "posts": [
+    {
+      "id": 42,
+      "title": "Website Redesign",
+      "client_name": "Acme Corp",
+      "thumb_url": "http://yoursite.com/wp-content/uploads/2023/01/project1.jpg",
+      "description": "<p>Complete website redesign for Acme Corp...</p>",
+      "short_description": "Complete website redesign",
+      "project_url": "https://acme-corp.com"
+    },
+    {
+      "id": 38,
+      "title": "E-commerce Platform",
+      "client_name": "ShopRight",
+      "thumb_url": "http://yoursite.com/wp-content/uploads/2023/01/project2.jpg",
+      "description": "<p>Custom e-commerce solution...</p>",
+      "short_description": "Custom e-commerce solution",
+      "project_url": "https://shopright.com"
+    }
+  ]
+}
+
+
+2. Get Single Portfolio Item
+GET /wp-json/simple-portfolio/v1/portfolio
+
+Parameters:
+----------------
+id (required) - Portfolio item ID
+
+JavaScript Fetch Example
+---------------------------
+fetch('https://yoursite.com/wp-json/simple-portfolio/v1/portfolio?id=42', {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+    'x_api_key': 'your-api-key-here'
+  }
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));
+
+curl Example
+---------------------------
+curl -X GET \
+  "http://yoursite.com/wp-json/simple-portfolio/v1/portfolio?id=42" \
+  -H "Content-Type: application/json" \
+  -H "x_api_key: your-api-key-here"
+
+Example Response:
+--------------------
+{
+  "id": 42,
+  "title": "Website Redesign",
+  "client_name": "Acme Corp",
+  "thumb_url": "http://yoursite.com/wp-content/uploads/2023/01/project1-full.jpg",
+  "description": "<p>Complete website redesign for Acme Corp...</p>",
+  "short_description": "Complete website redesign",
+  "project_url": "https://acme-corp.com"
+}
+
+
+Error Handling
+================================
+Status Code       Error                      Solution
+-----------------------------------------------------------------------------
+400	              Missing API key	           Include x_api_key header
+401	              Invalid API key	           Generate a new key or use correct one
+404	              Portfolio not found	       Check the portfolio ID exists
+415	              Invalid Content-Type	     Set Content-Type to application/json
+
+Example Implementation
+==============================
+<div id="portfolio-container"></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const apiKey = 'your-api-key-here';
+  const container = document.getElementById('portfolio-container');
+  
+  fetch(`https://yoursite.com/wp-json/simple-portfolio/v1/portfolio-list?per_page=6`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'x_api_key': apiKey
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    data.posts.forEach(item => {
+      const project = document.createElement('div');
+      project.className = 'portfolio-item';
+      project.innerHTML = `
+        <img src="${item.thumb_url}" alt="${item.title}">
+        <h3>${item.title}</h3>
+        <p>${item.short_description}</p>
+        <a href="${item.project_url}" target="_blank">View Project</a>
+      `;
+      container.appendChild(project);
+    });
+  })
+  .catch(error => {
+    console.error('Error loading portfolio:', error);
+    container.innerHTML = '<p>Error loading portfolio items. Please try again later.</p>';
+  });
+});
+</script>
