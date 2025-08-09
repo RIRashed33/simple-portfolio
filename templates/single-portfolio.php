@@ -13,7 +13,7 @@ if (have_posts()) :
         $project_types = get_the_terms(get_the_ID(), 'project_type');
         ?>
 
-        <article id="post-<?php the_ID(); ?>" <?php post_class('single-portfolio'); ?>>
+        <div id="post-<?php the_ID(); ?>" <?php post_class('single-portfolio'); ?>>
 
             <header class="entry-header">
                 <h1 class="entry-title"><?php the_title(); ?></h1>
@@ -48,7 +48,7 @@ if (have_posts()) :
                 <?php the_content(); ?>
             </div>
 
-        </article>
+        </div>
 
     <?php endwhile;
 else :
