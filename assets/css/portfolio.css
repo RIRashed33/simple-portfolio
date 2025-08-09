@@ -21,7 +21,7 @@
     display: block;
     overflow: hidden;
     border-radius: 6px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 .portfolio-thumb img {
     width: 100%;
@@ -36,16 +36,23 @@
 .portfolio-item:hover .portfolio-thumb img {
     transform: scale(1.05);
 }
-.portfolio-title {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin-bottom: 10px;
+body .portfolio-item h2 {
+    font-size: 24px;
+    margin: 0 0 24px !important;
+}
+body .portfolio-item h5 {
+    margin: 0 0 8px !important;
+    font-size: 16px;
 }
 .portfolio-excerpt {
     flex: 1;
     font-size: 0.95rem;
     color: #555;
-    margin-bottom: 15px;
+    margin-bottom: 24px;
+}
+.portfolio-excerpt p {
+    margin: 0;
+    font-weight: 400;
 }
 .btn-group {
     display: flex;

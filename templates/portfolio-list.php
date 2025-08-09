@@ -8,7 +8,8 @@
                         <?php the_post_thumbnail('medium'); ?>
                     </a>
                 <?php endif; ?>
-                <h3 class="portfolio-title"><?php the_title(); ?></h3>
+                <h2><?php the_title(); ?></h2>
+				<h5><?php echo get_post_meta( get_the_ID(), '_portfolio_client', true ); ?></h5>
                 <div class="portfolio-excerpt"><?php the_excerpt(); ?></div>
                 <div class="btn-group">
                     <a href="<?php the_permalink(); ?>" class="solid-btn">Learn More</a>
