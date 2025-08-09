@@ -53,8 +53,9 @@
 }
 .portfolio-item :is(.solid-btn,
 .transparent-btn) {
-    padding: 8px 14px;
+    padding: 14px 14px 12px;
     font-size: 0.85rem;
+    line-height: 1;
     border-radius: 4px;
     text-decoration: none !important;
     transition: all 0.3s ease;
