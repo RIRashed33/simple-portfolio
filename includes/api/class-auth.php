@@ -16,7 +16,7 @@ class Auth {
             return false;
         }
 
-        $saved_keys[$provided_key]['usage'] += 1;
+        $saved_keys[$header_key]['usage'] += 1;
         update_option('simple_portfolio_api_keys', $saved_keys);
 
         return true;
